@@ -5,9 +5,9 @@ function renderCartContents() {
   if (Array.isArray(cartItems) && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
-  } else {
-    console.log("Cart is empty or invalid");
-  }
+   } //else {
+  //   console.log("Cart is empty or invalid");
+  // }
 }
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
