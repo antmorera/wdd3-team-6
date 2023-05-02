@@ -8,6 +8,10 @@ function renderCartContents() {
    } //else {
   //   console.log("Cart is empty or invalid");
   // }
+  window.addEventListener("beforeunload", function() {
+    localStorage.removeItem("so-cart");
+  });
+  
 }
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
