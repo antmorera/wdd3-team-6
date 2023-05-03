@@ -11,8 +11,6 @@ function renderCartContents() {
     const cartTotal = cartItems.reduce((total, item) => total + item.FinalPrice, 0);
     const cartTotalElement = document.querySelector(".cart-total");
     cartTotalElement.innerHTML = `Total: $${cartTotal}`;
-  } else {
-    console.log("Cart is empty or invalid");
   }
 }
 function cartItemTemplate(item) {
