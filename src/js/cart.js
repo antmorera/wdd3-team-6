@@ -5,9 +5,13 @@ function renderCartContents() {
   if (Array.isArray(cartItems) && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
-   } //else {
-  //   console.log("Cart is empty or invalid");
-  // }
+    const cartFooter = document.querySelector(".cart-footer");
+    cartFooter.classList.remove("hide");
+
+    const cartTotal = cartItems.reduce((total, item) => total + item.FinalPrice, 0);
+    const cartTotalElement = document.querySelector(".cart-total");
+    cartTotalElement.innerHTML = `Total: $${cartTotal}`;
+  }
 }
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
