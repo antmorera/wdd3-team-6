@@ -8,7 +8,10 @@ function renderCartContents() {
     const cartFooter = document.querySelector(".cart-footer");
     cartFooter.classList.remove("hide");
 
-    const cartTotal = cartItems.reduce((total, item) => total + item.FinalPrice, 0);
+    const cartTotal = cartItems.reduce(
+      (total, item) => total + item.FinalPrice,
+      0
+    );
     const cartTotalElement = document.querySelector(".cart-total");
     cartTotalElement.innerHTML = `Total: $${cartTotal}`;
   }
