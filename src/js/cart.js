@@ -2,20 +2,34 @@ import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  if (Array.isArray(cartItems) && cartItems.length > 0) {
-    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    document.querySelector(".product-list").innerHTML = htmlItems.join("");
-    const cartFooter = document.querySelector(".cart-footer");
-    cartFooter.classList.remove("hide");
+  const cartListElement = document.querySelector(".product-list");
+  const cartFooter = document.querySelector(".cart-footer");
+  const cartTotalElement = document.querySelector(".cart-total");
+  const cartCountElement = document.querySelector(".cart-count");
 
-    const cartTotal = cartItems.reduce(
-      (total, item) => total + item.FinalPrice,
-      0
-    );
-    const cartTotalElement = document.querySelector(".cart-total");
-    cartTotalElement.innerHTML = `Total: $${cartTotal}`;
+  if (cartListElement && cartFooter && cartTotalElement && cartCountElement) {
+    if (Array.isArray(cartItems) && cartItems.length > 0) {
+      const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+      cartListElement.innerHTML = htmlItems.join("");
+      cartFooter.classList.remove("hide");
+
+      const cartTotal = cartItems.reduce(
+        (total, item) => total + item.FinalPrice,
+        0
+      );
+      cartTotalElement.textContent = `Total: $${cartTotal}`;
+
+      // Update the cart count
+      cartCountElement.textContent = cartItems.length;
+      cartCountElement.style.display = "inline-block";
+    } else {
+      cartListElement.innerHTML = "";
+      cartFooter.classList.add("hide");
+      cartCountElement.style.display = "inline-block";
+    }
   }
 }
+
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">

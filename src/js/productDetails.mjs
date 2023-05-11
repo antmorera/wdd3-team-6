@@ -19,13 +19,9 @@ function addToCart() {
   }
   cartItems.push(product);
   setLocalStorage("so-cart", cartItems);
-}
 
-// async function addToCartHandler(e) {
-//   const productId = getParams("product");
-//   const product = await findProductById(productId);
-//   addProductToCart(product);
-// }
+
+}
 
 function renderProductDetails() {
 
