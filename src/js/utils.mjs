@@ -26,3 +26,54 @@ export function getParams(param) {
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param)           
 };
+
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = true
+) {
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  const htmlString = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, htmlString.join(""));
+}
+
+export async function renderWithTemplate(
+  templateFn,
+  parentElement,
+  data,
+  position = "afterbegin",
+  callback,
+  clear = true
+) {
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  const htmlString = await templateFn(data);
+  parentElement.insertAdjacentHTML(position, htmlString);
+  if(callback) {
+    callback(data);
+}
+}
+
+function loadTemplate(path){
+  return async function(){
+    const res = await fetch (path);
+    if (res.ok) {
+      const html = await res.text();
+      return html;
+      }
+  }
+}
+
+export function loadHeaderFooter() {
+  const headerTemplateFn = loadTemplate("/partials/header.html");
+  const footerTemplateFn = loadTemplate("/partials/footer.html");
+  const header = document.querySelector("#main-header")
+  const footer = document.querySelector("#main-footer")
+  renderWithTemplate(headerTemplateFn,header)
+  renderWithTemplate(footerTemplateFn,footer)
+}
