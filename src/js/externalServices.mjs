@@ -14,17 +14,16 @@ export async function getProductsByCategory(category) {
   return data.Result;
 }
 
-const options = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(payload)
-}
-export async function checkout(form) {
-  const response = await fetch(baseURL + `:3000/checkout`,options);
-  const data = await convertToJson(response);
-  return data.Result;
+
+export async function checkout(payload) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  };
+  return await fetch(baseURL + "checkout/", options).then(convertToJson);
 }
 
 export async function findProductById(id) {
