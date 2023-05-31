@@ -1,4 +1,4 @@
-import { getProductsByCategory } from "./productData.mjs";
+import { getProductsByCategory } from "./externalServices.mjs";
 import { renderListWithTemplate } from "./utils.mjs";
 
 export default async function productList(selector, category) {
