@@ -1,5 +1,29 @@
 import { getLocalStorage } from "./utils.mjs";
 
+
+function formDataToJSON(formElement) {
+  const formData = new FormData(formElement),
+    convertedJSON = {};
+
+  formData.forEach(function (value, key) {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
+}
+
+function packageItems(items) {
+  const simplifiedItems = items.map((item) => {
+   
+    return {
+      id: item.Id,
+      price: item.FinalPrice,
+      name: item.Name,
+      quantity: 1,
+    };
+  });
+  return simplifiedItems;
+}
 const checkoutProcess = {
     key: "",
     outputSelector: "",
@@ -47,6 +71,24 @@ const checkoutProcess = {
       tax.innerText = "$" + this.tax;
       orderTotal.innerText = "$" + this.orderTotal;
     },
-}
-export default checkoutProcess;
+    checkout: async function (form) {
+      const json = formDataToJSON(form);
+      // add totals, and item details
+      json.orderDate = new Date();
+      json.orderTotal = this.orderTotal;
+      json.tax = this.tax;
+      json.shipping = this.shipping;
+      json.items = packageItems(this.list);
+      console.log(json);
+      try {
+        const res = await checkout(json);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  };
+  
+  export default checkoutProcess
+   
                 
