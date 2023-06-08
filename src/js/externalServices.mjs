@@ -1,19 +1,21 @@
-const baseURL = import.meta.env.VITE_SERVER_URL
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
-function convertToJson(res) {
+// This was instructed to change in step 2 of the instructions
+async function convertToJson(res) {
+  const data = await res.json();
   if (res.ok) {
-    return res.json();
+    return data;
   } else {
-    throw new Error("Bad Response");
+    throw { name: "servicesError", message: data };
   }
 }
 
 export async function getProductsByCategory(category) {
-  const response = await fetch(baseURL + `/products/search/${category}`);
+  // I removed the / before products because it was not displaying the item lists
+  const response = await fetch(baseURL + `products/search/${category}`);
   const data = await convertToJson(response);
   return data.Result;
 }
-
 
 export async function checkout(payload) {
   const options = {
@@ -27,7 +29,8 @@ export async function checkout(payload) {
 }
 
 export async function findProductById(id) {
-  const products = await fetch(baseURL + `/product/${id}`);
+  // I removed the / before products because it was not displaying the item lists
+  const products = await fetch(baseURL + `product/${id}`);
   const data = await convertToJson(products);
   return data.Result;
 }

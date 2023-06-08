@@ -1,5 +1,5 @@
 import { checkout } from "./externalServices.mjs";
-import { getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 function formDataToJSON(formElement) {
   const formData = new FormData(formElement),
@@ -82,6 +82,10 @@ const checkoutProcess = {
     try {
       const res = await checkout(json);
       console.log(res);
+      //saves an empty shopping cart in the browser's memory. It's like clearing the cart and getting it ready for new items.
+      setLocalStorage("so-cart", []);
+      // This will tell the browser to go to success.html when checking out
+      window.location.href = "/checkout/success.html";
     } catch (err) {
       console.log(err);
     }
