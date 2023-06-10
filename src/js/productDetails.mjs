@@ -1,7 +1,7 @@
 import { findProductById } from "./externalServices.mjs";
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
-let product = {}
+let product = {};
 
 export default async function productDetails(productId) {
   // get the information for the product. findProductByID will return. awaut will process that return.
@@ -21,14 +21,7 @@ function addToCart() {
   setLocalStorage("so-cart", cartItems);
 }
 
-// async function addToCartHandler(e) {
-//   const productId = getParams("product");
-//   const product = await findProductById(productId);
-//   addProductToCart(product);
-// }
-
 function renderProductDetails() {
-
   document.querySelector("#productName").innerText = product.Brand.Name;
   document.querySelector("#productNameWithoutBrand").innerText =
     product.NameWithoutBrand;
